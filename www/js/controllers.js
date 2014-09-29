@@ -7,8 +7,8 @@ angular.module('starter.controllers', [])
 	}
 	//登录
 	$scope.login =function (user){
-		//loginFun ($scope,$http,$state,user);
-        $state.go('app.home_page');
+		loginFun ($scope,$http,$state,user);
+        //$state.go('app.home_page');
     }
 })
 //个人中心
@@ -19,23 +19,24 @@ angular.module('starter.controllers', [])
 	//查询所有应用
 	loadApp($scope,$http,$compile);
 	//更新、下载、打开
-	$scope.downloadOrUpdate = function (appId) {
-        loadAppInfo($scope,$http,appId);
+	$scope.downloadOrUpdate = function (i,appId) {
+        $scope.objData = $scope.all_app[i];
         var state = document.getElementById(appId+"state").value;
-        if(1==state || 2 == state){//下载、更新
-        	 downloadApp($scope,$http);
+        if('1'==state || '2'==state){//下载、更新
+            downloadApp($scope,$http);
         }else{//打开
-        	if ('APP' == $scope.all_app_list[i].service_type) {//打开原生应用
-        		openApp($scope.all_app_list[i].schemesUrl,"",function (){
+        	if ('APP' == $scope.objData.service_type) {//打开原生应用
+        		openApp($scope.objData.schemesUrl,"",function (){
 					console.log("原生应用打开成功！")
 				},
 				function (){
 					console.log("打开原生应用失败！")
 				});
-        	}else if('NATIVE' == $scope.all_app_list[i].service_type){//打开NATIVE应用
-        		openNativeApp($scope.all_app_list[i].appId);
+        	}else if('NATIVE' == $scope.objData.service_type){//打开NATIVE应用
+        		openNativeApp($scope.objData.appId);
         	}else{//打开SERVICE
-	     		//$state.go(page,{'appId':appId,'appsourceid':$scope.objData.appsourceid});	
+                alert("打不开的！")
+	     		//$state.go(page,{'appId':appId,'appsourceid':$scope.objData.appsourceid});
         	}
         }
 	}

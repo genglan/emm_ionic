@@ -3,32 +3,45 @@ var XIAO_URL = "http://218.247.15.103/hxlife/interface/api/v1";
 var PRODUCT_URL = "http://218.247.15.103/hxlife/greeniInterface/api/v1/channel/";
 var WEATHER_URL = "http://218.247.15.103:8080/weatherinterface/";
 var bForcepc = fGetQuery("dv") == "pc";
-var storage = window.localStorage;
 //登录
 function loginFun ($scope,$http,$state,user){
    if("" == user.name||"" == user.pwd){
       alert("用户名密码错误！")
    }else{
-      $http.post("http://192.168.1.101:8080/emm_backend/v1/mslifeLogin.json",{"agentCode":user.name,"password":user.pwd,"clientType":'04'})
+      $http.post("http://192.168.1.100:8080/emm_backend/v1/mslifeLogin.json",{"agentCode":user.name,"password":user.pwd,"clientType":'04'})
       .success(function( obj ){
         if(0 == obj.status.code){
             var myData = obj.data;
-            storage.setItem("agentCode",myData.agentCode);
-            storage.setItem("agentName",myData.agentName);
-            storage.setItem("gender",myData.gender);
-            storage.setItem("birthday",myData.birthday);
-            storage.setItem("idType",myData.idType);
-            storage.setItem("idNo",myData.idNo);
-            storage.setItem("phone",myData.phone);
-            storage.setItem("organId",myData.organId);
-            storage.setItem("group",myData.group);
-            storage.setItem("password",myData.password);
-            storage.setItem("permissionType",myData.permissionType);
-            storage.setItem("state",myData.state);
-            storage.setItem("accountState",myData.accountState);
-            storage.setItem("branchType",myData.branchType);
-            $state.go('app.home_page');
-        }     
+            var jsonLogin ={
+               "databaseName":"UserDatabase",
+               "tableName": "current_user_info",
+               "conditions": [{"id": myData.agentCode}],
+               "data": [
+                        {
+              						"id": myData.agentCode,
+              						"name": myData.agentName,
+              						"loginName": myData.agentName,
+              						"password": myData.password,
+              						"icon": "",
+              						"flag": "",
+              						"score": "",
+              						"lastLoginTime": "",
+              						"seriesLoginCount": "",
+              						"phone": myData.phone,
+              						"position": "",
+              						"landline": ""
+                        }
+                    ]
+               };
+               updateORInsertTableDataByConditions (jsonLogin,function(str){
+                    if(1 == str[0]){
+                        $state.go('app.home_page');
+                    }
+                },function (){
+                    console.log("登录失败！")
+                })
+            
+           }     
       })
       .error(function(){
         console.log("网络连接错误");
@@ -54,6 +67,7 @@ function loadApp($scope,$http,$compile){
   .success(function( obj ){
     if(0 == obj.status.code){
       var data = obj.dataList;
+      $scope.all_app = data;
       checkApp(0,data,"",$scope,$compile);
     }
   })
@@ -72,12 +86,12 @@ function checkApp(i,d,appStr,$scope,$compile){
   queryTableDataByConditions(json,function(data){
     if(data.length>0){
         if(obj.version == data[0].version){//直接打开状态
-            appStr+="<a ng-click='downloadOrUpdate("+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
+            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
         }else{//更新状态
-            appStr+="<a ng-click='downloadOrUpdate("+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='2'><li id='"+obj.appId+"li' class='new_app'><span>开始更新</span></li></a>";
+            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='2'><li id='"+obj.appId+"li' class='new_app'><span>开始更新</span></li></a>";
         }
     }else{//下载状态
-      appStr+="<a ng-click='downloadOrUpdate("+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><li id='"+obj.appId+"li' class='new_app'><span>开始下载</span></li><input type='hidden' id='"+obj.appId+"state' value='1'>";
+      appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><li id='"+obj.appId+"li' class='new_app'><span>开始下载</span></li><input type='hidden' id='"+obj.appId+"state' value='1'>";
     }
     if(i < d.length-1){
         i++;
@@ -164,9 +178,11 @@ function downloadApp($scope,$http){
         },function (){
           console.log("原生应用下载失败！")
         })
-        $scope.bool = false;
       }else if('SERVICE' == $scope.objData.service_type){
         console.log('我是服务！');
+        alert(document.getElementById(appId+"state").value)
+        document.getElementById(appId+"state").value = "3";
+        document.getElementById($scope.objData.appId+"li").style.display= 'none';
       }else{//单应用
         //下载应用包
         var modelJson = {
@@ -180,7 +196,6 @@ function downloadApp($scope,$http){
         },function (){
           console.log("应用资源下载出错！")
         });
-        $scope.bool = false;
       } 
     }else{
       console.log("数据插入失败！");
