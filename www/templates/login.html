@@ -1,0 +1,12 @@
+<ion-view ng-controller="LoginCtrl" class="login_bg">
+	<ion-content>
+		<div class="logo"></div>
+		<div class="login">
+			<input id="userName" type="text" style="cursor:url(image/3dgmove.cur)" ng-model="user.name" placeholder="用户名" autocapitalize="off"/>
+			<input id="userPwd" type="password" ng-model="user.pwd" placeholder="密码" style="ime-mode:disabled" autocapitalize="off" />
+		</div>
+		<div class="login_btn" ng-click="login(user)">
+			<img src="img/login_btn.png" />
+		</div>
+	</ion-content>
+</ion-view>
