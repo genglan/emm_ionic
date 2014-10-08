@@ -1,4 +1,4 @@
-var API_URL = "http://218.247.15.102/emm_backend/api/v1";
+var API_URL = "http://10.0.17.110:8080/emm_backend/v1";
 var XIAO_URL = "http://218.247.15.103/hxlife/interface/api/v1"; 
 var PRODUCT_URL = "http://218.247.15.103/hxlife/greeniInterface/api/v1/channel/";
 var WEATHER_URL = "http://218.247.15.103:8080/weatherinterface/";
@@ -8,7 +8,7 @@ function loginFun ($scope,$http,$state,user){
    if("" == user.name||"" == user.pwd){
       alert("用户名密码错误！")
    }else{
-      $http.post("http://192.168.1.100:8080/emm_backend/v1/mslifeLogin.json",{"agentCode":user.name,"password":user.pwd,"clientType":'04'})
+      $http.post(API_URL+"/mslifeLogin.json",{"agentCode":user.name,"password":user.pwd,"clientType":'04'})
       .success(function( obj ){
         if(0 == obj.status.code){
             var myData = obj.data;
@@ -169,7 +169,7 @@ function downloadApp($scope,$http){
   //向本地库添加数据
   updateORInsertTableDataByConditions (jsonApp,function(str){
     if(1 == str[0]){ //数据插入成功
-      if('APP' == $scope.objData.service_type){
+      if('NATIVE' == $scope.objData.service_type){
         var appKye ={'appList':$scope.objData.plistUrl};
         downloadNavtiveApp(appKye,function (str){
           if('1' == str[0]){
