@@ -13,6 +13,8 @@ angular.module('starter.controllers', [])
 })
 //个人中心
 .controller('PersonalCtrl', function($scope) {
+	// $scope.name = storage.name ; 
+	$scope.name = "苏麟"
 })
 //主页
 .controller('HomePageCtrl', function($scope,$http,$compile) {

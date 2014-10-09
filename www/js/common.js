@@ -3,6 +3,7 @@ var XIAO_URL = "http://218.247.15.103/hxlife/interface/api/v1";
 var PRODUCT_URL = "http://218.247.15.103/hxlife/greeniInterface/api/v1/channel/";
 var WEATHER_URL = "http://218.247.15.103:8080/weatherinterface/";
 var bForcepc = fGetQuery("dv") == "pc";
+var storage = window.localStorage;
 //登录
 function loginFun ($scope,$http,$state,user){
    if("" == user.name||"" == user.pwd){
@@ -35,6 +36,7 @@ function loginFun ($scope,$http,$state,user){
                };
                updateORInsertTableDataByConditions (jsonLogin,function(str){
                     if(1 == str[0]){
+                        storage.setItem("name",myData.agentName);
                         $state.go('app.home_page');
                     }
                 },function (){
@@ -174,14 +176,15 @@ function downloadApp($scope,$http){
         downloadNavtiveApp(appKye,function (str){
           if('1' == str[0]){
             console.log("原生应用下载成功！")
+            document.getElementById($scope.objData.appId+"state").value = "3";
+            document.getElementById($scope.objData.appId+"li").style.display= 'none';
           }
         },function (){
           console.log("原生应用下载失败！")
         })
       }else if('SERVICE' == $scope.objData.service_type){
         console.log('我是服务！');
-        alert(document.getElementById(appId+"state").value)
-        document.getElementById(appId+"state").value = "3";
+        document.getElementById($scope.objData.appId+"state").value = "3";
         document.getElementById($scope.objData.appId+"li").style.display= 'none';
       }else{//单应用
         //下载应用包
@@ -191,7 +194,7 @@ function downloadApp($scope,$http){
         }
         downloadZip(modelJson,function (){
           console.log("应用资源下载成功！");
-          document.getElementById(appId+"state").value = "3";
+          document.getElementById($scope.objData.appId+"state").value = "3";
           document.getElementById($scope.objData.appId+"li").style.display= 'none';
         },function (){
           console.log("应用资源下载出错！")
