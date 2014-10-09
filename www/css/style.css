@@ -30,7 +30,7 @@ a{
 	margin: 0 0;
 }
 .left-buttons + .title{
-	background-color: #63D5f7;
+	background-color: #3B96A9;
 }
 .position {
     border-bottom: 1px #ccc solid;
@@ -148,7 +148,7 @@ dt, dd {
 }
 @media only screen and (min-width: 640px){
 	.weather {
-		background: #63dbfe;
+		background: #3B96A9;
 		z-index: 2;
 		position: absolute;
 		top: 43px;
@@ -224,6 +224,8 @@ dt, dd {
 .logo {
 	width: 84px;
 	height: 76px;
+	background: url(../img/logo.png) no-repeat;
+	background-size: 84px 76px;
 	margin: 160px auto;
 	margin-bottom: 0;
 }
@@ -233,7 +235,7 @@ dt, dd {
 	margin-bottom: 44px;
 }
 .login_bg {
-	background: url(../img/login_bg2.jpg) repeat-x;
+	background: url(../img/login_bg2.png) repeat-x;
 	background-size: 100% 100%;
 	z-index: 10;
 }
@@ -289,14 +291,14 @@ dt, dd {
 		height: 85px;
 	}
 	.app_list ul li {
-		padding: 17px 0 0;
+		padding: 6px 0 0;
 	}
 	.new_app span {
 		top: 50px;
 		left: 30px;
 	}
 	.weather {
-		background: #63dbfe;
+		background: #3B96A9;
 		z-index: 2;
 		position: absolute;
 		top: 43px;
@@ -343,5 +345,8 @@ dt, dd {
 	}
 	.weather .current_weather ul li p:nth-child(2){
 		margin-top: 25px;
+	}
+	.app_list {
+		margin-top: 132px;
 	}
 }
