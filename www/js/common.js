@@ -97,12 +97,12 @@ function checkApp(i,d,appStr,$scope,$compile){
     var picSrc = obj.icon?obj.icon:'img/show.png';
     if(data.length>0){
         if(obj.versionId == data[0].versionId){//直接打开状态
-            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
+            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+picSrc+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
         }else{//更新状态
-            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='2'><li id='"+obj.appId+"li' class='new_app'><span>开始更新</span></li></a>";
+            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+picSrc+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='2'><li id='"+obj.appId+"li' class='new_app'><span>开始更新</span></li></a>";
         }
     }else{//下载状态
-      appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><li id='"+obj.appId+"li' class='new_app'><span>开始下载</span></li><input type='hidden' id='"+obj.appId+"state' value='1'>";
+      appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+picSrc+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><li id='"+obj.appId+"li' class='new_app'><span>开始下载</span></li><input type='hidden' id='"+obj.appId+"state' value='1'>";
     }
     if(i < d.length-1){
         i++;
