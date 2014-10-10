@@ -15,13 +15,13 @@ function loginFun ($scope,$http,$state,user){
             var jsonLogin ={
                "databaseName":"UserDatabase",
                "tableName": "current_user_info",
-               "conditions": [{"id": myData.agentCode}],
+               "conditions": [{"id": user.userName}],
                "data": [
                         {
-              						"id": myData.agentCode,
+              						"id": user.userName,
               						"name": myData.agentName,
               						"loginName": myData.agentName,
-              						"password": myData.password,
+              						"password": user.password,
               						"icon": "",
               						"flag": "",
               						"score": "",
@@ -36,8 +36,8 @@ function loginFun ($scope,$http,$state,user){
                updateORInsertTableDataByConditions (jsonLogin,function(str){
                     if(1 == str[0]){
                         storage.setItem("name",myData.agentName);
-                        storage.setItem("userName",myData.agentCode);
-                        storage.setItem("password",myData.password);
+                        storage.setItem("userName",user.userName);
+                        storage.setItem("password",user.password);
                         storage.setItem("phone",myData.phone);
                         $state.go('app.home_page');
                     }
