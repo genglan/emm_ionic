@@ -17,9 +17,13 @@ angular.module('starter.controllers', [])
 	$scope.name = "苏麟"
 })
 //主页
-.controller('HomePageCtrl', function($scope,$http,$compile) {
+.controller('HomePageCtrl', function($scope,$http,$compile,$interval) {
 	//查询所有应用
 	loadApp($scope,$http,$compile);
+	//间隔
+	$interval(function (){
+		loadApp($scope,$http,$compile);
+	},2000000);//大概33分钟执行一次
 	//更新、下载、打开
 	$scope.downloadOrUpdate = function (i,appId) {
         $scope.objData = $scope.all_app[i];
