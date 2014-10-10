@@ -7,14 +7,14 @@ angular.module('starter.controllers', [])
 	}
 	//登录
 	$scope.login =function (user){
-		//loginFun ($scope,$http,$state,user);
-        $state.go('app.home_page');
+		loginFun ($scope,$http,$state,user);
+        //$state.go('app.home_page');
     }
 })
 //个人中心
 .controller('PersonalCtrl', function($scope) {
-	// $scope.name = storage.name ; 
-	$scope.name = "苏麟"
+	$scope.name = storage.name ; 
+	$scope.phone = storage.phone ; 
 })
 //主页
 .controller('HomePageCtrl', function($scope,$http,$compile,$interval) {
@@ -38,7 +38,11 @@ angular.module('starter.controllers', [])
         		}else{
         			openUrl = $scope.objData.schemesUrl;
         		}
-        		openApp(openUrl,"{'userName':'"+storage.userName+"','password':'"+storage.password+"'}",function (){
+        		var j={
+        			"userName":storage.userName,
+        			"password":storage.password
+        		}
+        		openApp(openUrl,j,function (){
 					console.log("原生应用打开成功！")
 				},
 				function (){

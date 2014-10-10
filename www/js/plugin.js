@@ -1,4 +1,26 @@
 
+/**   ========================= 判断应用运行的设备   ====================== */
+/**
+ *  @brief   
+ *
+ *  @param  success_callback    成功回调
+ *  @param  failed_callback"    失败回调
+ *
+ *  @return 成功返回1  失败返回0
+ */
+
+function currentDeviceModel(key, success_callback, failed_callback) {
+    if(brows().iphone) {
+        
+        cordova.exec(success_callback, failed_callback, "DeviceModelPlugin", "currentDeviceModel", [key]);
+    }
+    // Android
+    else if(brows().android) {
+        return cordova.exec(success_callback, failed_callback, "DeviceModelPlugin", "currentDeviceModel", key);
+        
+    }
+}
+
 /**   ========================= 上传图片   ====================== */
 /**
  *  @brief   上传图片

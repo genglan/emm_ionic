@@ -269,7 +269,11 @@ dt, dd {
 	padding-top: 3px;
 	height:48px;
 }
-
+.login input:focus{
+	background-color: #e5f8fe;
+    border: 1px solid #12c1f6;
+    color: #60D5F6;
+}
 .login_btn {
 	width: 300px;
 	height: 48px;
@@ -278,11 +282,13 @@ dt, dd {
 .login_btn input {
 	width: 100%;
 	height:100%;
-	background: #14c2f7;
 	border-radius: 8px;
 	border: none;
     color: #fff;
     font-size: 18px;
+}
+.active{
+	background: #14c2f7;
 }
 @media only screen and (max-width: 640px){
 	.app_list {

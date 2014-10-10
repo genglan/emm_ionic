@@ -39,6 +39,7 @@ function loginFun ($scope,$http,$state,user){
                         storage.setItem("name",myData.agentName);
                         storage.setItem("userName",myData.agentCode);
                         storage.setItem("password",myData.password);
+                        storage.setItem("phone",myData.phone);
                         $state.go('app.home_page');
                     }
                 },function (){
@@ -121,12 +122,12 @@ function checkApp(i,d,appStr,$scope,$compile){
 function openNativeApp(appid){
   //根据频道ID查询菜单
   var serviceType = "LOCAL";
-  var url = "promodel/"+appid+"/www/index.html#/";
-  if('ipad' == fBrowserRedirect()){
-      url += "menu/welcome/"+appid;
-  }else{
-      url += "characteristic/"+appid;
-  }
+  var url = "promodel/"+appid+"/www/index.html#/"+appid;
+  // if('ipad' == fBrowserRedirect()){
+  //     url += "menu/welcome/"+appid;
+  // }else{
+  //     url += "characteristic/"+appid;
+  // }
   var menuJson ={
       "databaseName":"AppDatabase",
       "tableName": "app_menu",
@@ -225,31 +226,26 @@ function downloadApp($scope,$http){
 function fBrowserRedirect(){   
   var sUserAgent = navigator.userAgent.toLowerCase();  
   var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";    
-  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";  
-  var bIsMidp = sUserAgent.match(/midp/i) == "midp";  
-  var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";  
-  var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";  
-  var bIsAndroid = sUserAgent.match(/android/i) == "android";  
-  var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";  
-  var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";  
-  if(bIsIpad){  
-      var sUrl = location.href;      
-      if(!bForcepc){  
-          return "ipad"; 
-      }  
-  }  
-  if(bIsIphoneOs || bIsAndroid){  
-      var sUrl = location.href;      
-      if(!bForcepc){  
-          return "iphone";
-      }  
-  }  
-  if(bIsMidp||bIsUc7||bIsUc||bIsCE||bIsWM){  
-      var sUrl = location.href;      
-      if(!bForcepc){  
-          return "other";
-      }  
-  }  
-  
+  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os"; 
+  if(brows().android){
+      if('phone' == currentDeviceModel()){
+        return "iphone";
+      }else if('pad' == currentDeviceModel()){
+        return "ipad"; 
+      }
+  }else{
+    if(bIsIpad){  
+        var sUrl = location.href;      
+        if(!bForcepc){  
+            return "ipad"; 
+        }  
+    }  
+    if(bIsIphoneOs){  
+        var sUrl = location.href;      
+        if(!bForcepc){  
+            return "iphone";
+        }  
+    } 
+  }
   return "";
 }
