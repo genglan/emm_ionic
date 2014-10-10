@@ -2,7 +2,6 @@ var API_URL = "http://10.0.17.110:8080/emm_backend/v1";
 var XIAO_URL = "http://218.247.15.103/hxlife/interface/api/v1"; 
 var PRODUCT_URL = "http://218.247.15.103/hxlife/greeniInterface/api/v1/channel/";
 var WEATHER_URL = "http://218.247.15.103:8080/weatherinterface/";
-var bForcepc = fGetQuery("dv") == "pc";
 var storage = window.localStorage;
 //登录
 function loginFun ($scope,$http,$state,user){
@@ -122,12 +121,7 @@ function checkApp(i,d,appStr,$scope,$compile){
 function openNativeApp(appid){
   //根据频道ID查询菜单
   var serviceType = "LOCAL";
-  var url = "promodel/"+appid+"/www/index.html#/"+appid;
-  // if('ipad' == fBrowserRedirect()){
-  //     url += "menu/welcome/"+appid;
-  // }else{
-  //     url += "characteristic/"+appid;
-  // }
+  var url = "promodel/"+appid+"/www/index.html#"+appid;
   var menuJson ={
       "databaseName":"AppDatabase",
       "tableName": "app_menu",
@@ -221,31 +215,4 @@ function downloadApp($scope,$http){
   },function(){
     console.log("数据插入异常！");
   }); 
-}
- //验证设备
-function fBrowserRedirect(){   
-  var sUserAgent = navigator.userAgent.toLowerCase();  
-  var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";    
-  var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os"; 
-  if(brows().android){
-      if('phone' == currentDeviceModel()){
-        return "iphone";
-      }else if('pad' == currentDeviceModel()){
-        return "ipad"; 
-      }
-  }else{
-    if(bIsIpad){  
-        var sUrl = location.href;      
-        if(!bForcepc){  
-            return "ipad"; 
-        }  
-    }  
-    if(bIsIphoneOs){  
-        var sUrl = location.href;      
-        if(!bForcepc){  
-            return "iphone";
-        }  
-    } 
-  }
-  return "";
 }
