@@ -2,8 +2,8 @@ angular.module('starter.controllers', [])
 //登录
 .controller('LoginCtrl',function ($scope,$http,$state){
 	$scope.user = {
-		'name': "8611018517",
-		'pwd': "195788"
+		'userName': "8611018517",
+		'password': "195788"
 	}
 	//登录
 	$scope.login =function (user){
@@ -32,7 +32,13 @@ angular.module('starter.controllers', [])
             downloadApp($scope,$http);
         }else{//打开
         	if ('NATIVE' == $scope.objData.service_type) {//打开原生应用
-        		openApp($scope.objData.schemesUrl,"",function (){
+        		var openUrl = "";
+        		if(brows().android){
+        			openUrl = $scope.objData.pkgname ;
+        		}else{
+        			openUrl = $scope.objData.schemesUrl;
+        		}
+        		openApp(openUrl,"{'userName':'"+storage.userName+"','password':'"+storage.password+"'}",function (){
 					console.log("原生应用打开成功！")
 				},
 				function (){

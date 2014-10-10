@@ -83,4 +83,3 @@ $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-ur
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/login');
 });
-

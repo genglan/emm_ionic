@@ -6,10 +6,10 @@ var bForcepc = fGetQuery("dv") == "pc";
 var storage = window.localStorage;
 //登录
 function loginFun ($scope,$http,$state,user){
-   if("" == user.name||"" == user.pwd){
+   if("" == user.userName||"" == user.password){
       alert("用户名密码错误！")
    }else{
-      $http.post(API_URL+"/mslifeLogin.json",{"agentCode":user.name,"password":user.pwd,"clientType":'04'})
+      $http.post(API_URL+"/mslifeLogin.json",{"agentCode":user.userName,"password":user.password,"clientType":'04'})
       .success(function( obj ){
         if(0 == obj.status.code){
             var myData = obj.data;
@@ -37,6 +37,8 @@ function loginFun ($scope,$http,$state,user){
                updateORInsertTableDataByConditions (jsonLogin,function(str){
                     if(1 == str[0]){
                         storage.setItem("name",myData.agentName);
+                        storage.setItem("userName",myData.agentCode);
+                        storage.setItem("password",myData.password);
                         $state.go('app.home_page');
                     }
                 },function (){
@@ -64,8 +66,14 @@ function loadAppInfo($scope,$http,appId){
 }
 //查询应用
 function loadApp($scope,$http,$compile){
+  var osId = '1';
+  var modelType = '';
+  if(brows().android){
+    osId = 2;
+    modelType = 1;
+  }
   //查询所有应用
-  $http.post(API_URL+'/appStore/list.json')
+  $http.get(API_URL+'/appStore/getList.json?modelType='+modelType+'&osId='+osId)
   .success(function( obj ){
     if(0 == obj.status.code){
       var data = obj.dataList;
@@ -172,7 +180,13 @@ function downloadApp($scope,$http){
   updateORInsertTableDataByConditions (jsonApp,function(str){
     if(1 == str[0]){ //数据插入成功
       if('NATIVE' == $scope.objData.service_type){
-        var appKye ={'appList':$scope.objData.plistUrl};
+        var downloadUrl = "";
+        if(brows().android){
+          downloadUrl = $scope.objData.ipaUrl;
+        }else{
+          downloadUrl = $scope.objData.plistUrl;
+        }
+        var appKye ={'appList':downloadUrl};
         downloadNavtiveApp(appKye,function (str){
           if('1' == str[0]){
             console.log("原生应用下载成功！")
