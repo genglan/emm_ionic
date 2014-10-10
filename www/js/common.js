@@ -94,6 +94,7 @@ function checkApp(i,d,appStr,$scope,$compile){
       "conditions": {"appId":obj.appId}
   };
   queryTableDataByConditions(json,function(data){
+    var picSrc = obj.icon?obj.icon:'img/show.png';
     if(data.length>0){
         if(obj.versionId == data[0].versionId){//直接打开状态
             appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
