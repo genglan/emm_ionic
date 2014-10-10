@@ -96,12 +96,12 @@ function checkApp(i,d,appStr,$scope,$compile){
   queryTableDataByConditions(json,function(data){
     if(data.length>0){
         if(obj.version == data[0].version){//直接打开状态
-            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
+            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='3'></a>";
         }else{//更新状态
-            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='2'><li id='"+obj.appId+"li' class='new_app'><span>开始更新</span></li></a>";
+            appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><input type='hidden' id='"+obj.appId+"state' value='2'><li id='"+obj.appId+"li' class='new_app'><span>开始更新</span></li></a>";
         }
     }else{//下载状态
-      appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.NAME+"</span></dd></dl></li><li id='"+obj.appId+"li' class='new_app'><span>开始下载</span></li><input type='hidden' id='"+obj.appId+"state' value='1'>";
+      appStr+="<a ng-click='downloadOrUpdate("+i+","+obj.appId+")'><li><dl><dt><img src='"+obj.icon+"' /></dt><dd><span>"+obj.appName+"</span></dd></dl></li><li id='"+obj.appId+"li' class='new_app'><span>开始下载</span></li><input type='hidden' id='"+obj.appId+"state' value='1'>";
     }
     if(i < d.length-1){
         i++;
@@ -160,7 +160,7 @@ function downloadApp($scope,$http){
        "icon":$scope.objData.icon,
        "iconInfo":$scope.objData.iconInfo,
        "versionDescription":$scope.objData.versionDescription,
-       "name": $scope.objData.name,
+       "name": $scope.objData.appName,
        "pkgname": $scope.objData.pkgname,
        "fullTrialText": $scope.objData.fullTrialText,
        "version":$scope.objData.version,
