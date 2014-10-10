@@ -169,7 +169,7 @@ function downloadApp($scope,$http){
        "full_trial_id": $scope.objData.full_trial_id,
        "version_type": $scope.objData.version_type,
        "schemesUrl": $scope.objData.schemesUrl,
-       "service_type": $scope.objData.service_type,
+       "service_type": $scope.objData.codeStyleText,
        "createTime":$scope.objData.createTime,
        "appSize":$scope.objData.appSize,
        "plistUrl":$scope.objData.plistUrl
@@ -179,7 +179,7 @@ function downloadApp($scope,$http){
   //向本地库添加数据
   updateORInsertTableDataByConditions (jsonApp,function(str){
     if(1 == str[0]){ //数据插入成功
-      if('NATIVE' == $scope.objData.service_type){
+      if('NATIVE' == $scope.objData.codeStyleText){
         var downloadUrl = "";
         if(brows().android){
           downloadUrl = $scope.objData.ipaUrl;
@@ -196,7 +196,7 @@ function downloadApp($scope,$http){
         },function (){
           console.log("原生应用下载失败！")
         })
-      }else if('SERVICE' == $scope.objData.service_type){
+      }else if('SERVICE' == $scope.objData.codeStyleText){
         console.log('我是服务！');
         document.getElementById($scope.objData.appId+"state").value = "3";
         document.getElementById($scope.objData.appId+"li").style.display= 'none';

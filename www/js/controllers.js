@@ -31,7 +31,7 @@ angular.module('starter.controllers', [])
         if('1'==state || '2'==state){//下载、更新
             downloadApp($scope,$http);
         }else{//打开
-        	if ('NATIVE' == $scope.objData.service_type) {//打开原生应用
+        	if ('NATIVE' == $scope.objData.codeStyleText) {//打开原生应用
         		var openUrl = "";
         		if(brows().android){
         			openUrl = $scope.objData.pkgname ;
@@ -44,7 +44,7 @@ angular.module('starter.controllers', [])
 				function (){
 					console.log("打开原生应用失败！")
 				});
-        	}else if('WEBSERVICE' == $scope.objData.service_type){//打开WEBSERVICE应用
+        	}else if('WEBSERVICE' == $scope.objData.codeStyleText){//打开WEBSERVICE应用
         		openNativeApp($scope.objData.appId);
         	}else{//打开SERVICE
                 alert("打不开的！")
