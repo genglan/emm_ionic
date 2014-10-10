@@ -102,7 +102,6 @@ a{
 }
 .app_list ul dl{
 	margin-bottom: 0;
-
 }
 .app_list ul li {
 	width: 100%;
@@ -112,7 +111,6 @@ a{
 	width: 20%;
 	height: 225px;
 	display: inline-block;
-	
 	text-align: center;
 	border: 1px solid #ccc;
 	border-top: none;
@@ -149,7 +147,7 @@ a{
 	left: 75px;
 }
 dt, dd {
-	line-height: 2.42857;
+	line-height: 2.12857;
 }
 @media only screen and (min-width: 640px){
 	.weather {
@@ -287,16 +285,27 @@ dt, dd {
     font-size: 18px;
 }
 @media only screen and (max-width: 640px){
+	.app_list {
+		margin-top: 115px;
+        padding:0;
+	}
 	.app_list ul a {
 		width: 33.33%;
-		height: 130px;
+		height: 142px;
+		display: block;
+		float: left;
+
+	}
+	.app_list ul a:nth-child(3n) li {
+		border-right: none;
+	}
+	.app_list ul li {
+		padding: 0;
+        padding-top: 15px;
 	}
 	.app_list  dl dt img {
 		width: 85px;
 		height: 85px;
-	}
-	.app_list ul li {
-		padding: 6px 0 0;
 	}
 	.new_app span {
 		top: 50px;
@@ -350,8 +359,5 @@ dt, dd {
 	}
 	.weather .current_weather ul li p:nth-child(2){
 		margin-top: 25px;
-	}
-	.app_list {
-		margin-top: 132px;
 	}
 }
