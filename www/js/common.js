@@ -4,17 +4,6 @@ var PRODUCT_URL = "http://218.247.15.103/hxlife/greeniInterface/api/v1/channel/"
 var WEATHER_URL = "http://218.247.15.103:8080/weatherinterface/";
 var storage = window.localStorage;
 var modelType = '';
-  setTimeout(function(){
-    currentDeviceModel("", function (obj){             
-      if('pad' == obj){
-        modelType = '2';
-      }else{
-        modelType = '1';
-      }
-    }, function (){
-      console.log("获取设备失败！")
-    })
-  },500)
 //登录
 function loginFun ($scope,$http,$state,user){
    if("" == user.userName||"" == user.password){
