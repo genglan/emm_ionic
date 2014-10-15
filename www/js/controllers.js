@@ -1,30 +1,18 @@
 angular.module('starter.controllers', [])
 //登录
 .controller('LoginCtrl',function ($scope,$http,$state,$timeout){
-    $timeout(function(){
-        currentDeviceModel("", function (obj){             
-          if('pad' == obj){
-            modelType = '2';
-          }else{
-            modelType = '1';
-          }
-        }, function (){
-          console.log("获取设备失败！")
-        })
-    },500);
 	$scope.user = {
 		'userName': "8611018517",
 		'password': "195788"
 	}
-	//登录
+    //登录
 	$scope.login =function (user){
-		//loginFun ($scope,$http,$state,user);
-        $state.go('app.home_page');
+		loginFun ($scope,$http,$state,user);
+        //$state.go('app.home_page');
     }
 })
 //个人中心
 .controller('PersonalCtrl', function($scope) {
-    alert(modelType)
 	$scope.name = storage.name ; 
 	$scope.phone = storage.phone ; 
 })

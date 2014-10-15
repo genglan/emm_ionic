@@ -3,7 +3,6 @@ var XIAO_URL = "http://218.247.15.103/hxlife/interface/api/v1";
 var PRODUCT_URL = "http://218.247.15.103/hxlife/greeniInterface/api/v1/channel/";
 var WEATHER_URL = "http://218.247.15.103:8080/weatherinterface/";
 var storage = window.localStorage;
-var modelType = '';
 //登录
 function loginFun ($scope,$http,$state,user){
    if("" == user.userName||"" == user.password){
@@ -67,6 +66,7 @@ function loadAppInfo($scope,$http,appId){
 }
 //查询应用
 function loadApp($scope,$http,$compile){
+  var modelType = platform == 'pad'?'2':'1';
   var osId = '1';
   if(brows().android){
       osId = 2;   
